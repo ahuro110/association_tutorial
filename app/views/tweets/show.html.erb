@@ -3,6 +3,13 @@
 
 <p><span>email: </span><%= @user.email %></p>
 <p><span>ツイート内容: </span><%= @tweet.body %></p>
+<% if  current_user != @tweet.user %>
+  <%if @tweet.user.followed_by?(current_user) %>
+    <p><%= link_to "フォロー済み", user_relationships_path(@tweet.user.id) ,method: :delete %></p>
+  <% else %>
+    <p><%= link_to "フォローする", user_relationships_path(@tweet.user.id) ,method: :post %></p>
+  <% end %>
+<% end %>
 
 <%= render "comments/form", {tweet: @tweet, comment: @comment} %>
 
